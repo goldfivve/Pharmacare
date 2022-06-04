@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Pharmacare.Api.Repositories;
+using Pharmacare.Api.Repositories.Contracts;
 using Pharmacare.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContextPool<PharmacareDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("PharmacareConnection")));
+
+
+builder.Services.AddScoped<IDrugRepository, DrugRepository>();
 
 var app = builder.Build();
 

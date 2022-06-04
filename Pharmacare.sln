@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharmacare.Api", "Pharmacare.Api\Pharmacare.Api.csproj", "{ED14E439-8172-4215-B9E0-ECEE0ED10694}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D2825462-6EA9-4E84-B2CD-46FAB2679450} = {D2825462-6EA9-4E84-B2CD-46FAB2679450}
+		{55D8FE72-4C6E-4383-A651-53D0A5FDE978} = {55D8FE72-4C6E-4383-A651-53D0A5FDE978}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharmacare.Blazor", "Pharmacare.Blazor\Pharmacare.Blazor.csproj", "{D2825462-6EA9-4E84-B2CD-46FAB2679450}"
 EndProject
