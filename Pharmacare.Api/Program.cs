@@ -18,6 +18,7 @@ builder.Services.AddDbContextPool<PharmacareDbContext>(options =>
 
 
 builder.Services.AddScoped<IDrugRepository, DrugRepository>();
+builder.Services.AddScoped<ICartRepository, CartRepository>();
 
 var app = builder.Build();
 

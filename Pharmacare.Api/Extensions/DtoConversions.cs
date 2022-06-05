@@ -44,5 +44,41 @@ namespace Pharmacare.Api.Extensions
                 TradeName = drug.TradeName
             };
         }
+
+        public static IEnumerable<CartItemDto> ConvertToDto(this IEnumerable<CartItem> cartItems,
+            IEnumerable<Drug> drugs)
+        {
+            return (from cartItem in cartItems
+                join drug in drugs
+                    on cartItem.DrugId equals drug.DrugId
+                select new CartItemDto
+                {
+                    Id = cartItem.Id,
+                    DrugId = drug.DrugId,
+                    CartId = cartItem.CartId,
+                    DrugImageURL = drug.ImageURL,
+                    DrugName = drug.TradeName,
+                    Price = drug.Price,
+                    Quantity = cartItem.Quantity,
+                    TotalPrice = drug.Price * cartItem.Quantity
+
+                }).ToList();
+        }
+        public static CartItemDto ConvertToDto(this CartItem cartItem,
+            Drug drug)
+        {
+            return new CartItemDto
+                {
+                    Id = cartItem.Id,
+                    DrugId = drug.DrugId,
+                    CartId = cartItem.CartId,
+                    DrugImageURL = drug.ImageURL,
+                    DrugName = drug.TradeName,
+                    Price = drug.Price,
+                    Quantity = cartItem.Quantity,
+                    TotalPrice = drug.Price * cartItem.Quantity
+
+                };
+        }
     }
 }
