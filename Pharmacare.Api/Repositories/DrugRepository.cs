@@ -34,19 +34,22 @@ namespace Pharmacare.Api.Repositories
             return activeSubstances;
         }
 
-        public Task<Drug> GetDrugById(int id)
+        public async Task<Drug> GetDrugById(int id)
         {
-            throw new NotImplementedException();
+            var drug = await _pharmacareDbContext.Drugs.FindAsync(id);
+            return drug;
         }
 
-        public Task<Category> GetCategoryById(int id)
+        public async Task<Category> GetCategoryById(int id)
         {
-            throw new NotImplementedException();
+            var category = await _pharmacareDbContext.Categories.SingleOrDefaultAsync(c => c.Id == id);
+            return category;
         }
 
-        public Task<ActiveSubstance> GetActiveSubstanceById(int id)
+        public async Task<ActiveSubstance> GetActiveSubstanceById(int id)
         {
-            throw new NotImplementedException();
+            var substance = await _pharmacareDbContext.ActiveSubstances.SingleOrDefaultAsync(a => a.SubstanceId == id);
+            return substance;
         }
 
     }

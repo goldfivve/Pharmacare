@@ -42,5 +42,35 @@ namespace Pharmacare.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+        
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<DrugDto>> GetItem(int id)
+        {
+            try
+            {
+                var drug = await _drugRepository.GetDrugById(id);
+
+                if (drug == null)
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    var category = await _drugRepository.GetCategoryById(drug.CategoryId);
+                    var activeSubstance = await _drugRepository.GetActiveSubstanceById(drug.ActiveSubstanceId);
+
+                    var drugDto = drug.ConvertToDto(category, activeSubstance);
+
+                    return Ok(drugDto);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
+
     }
 }
