@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Pharmacare.Api.Extensions;
 using Pharmacare.Api.Repositories.Contracts;
 using Pharmacare.Models.Dtos;
 
@@ -17,6 +18,29 @@ namespace Pharmacare.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DrugDto>>>
+        public async Task<ActionResult<IEnumerable<DrugDto>>> GetItems()
+        {
+            try
+            {
+                var drugs = await _drugRepository.GetItems();
+                var drugCategories = await _drugRepository.GetCategories();
+                var activeSubstances = await _drugRepository.GetActiveSubstances();
+
+                if (drugs == null || drugCategories == null || activeSubstances == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    var drugDtos = drugs.ConvertToDto(drugCategories, activeSubstances);
+                    return Ok(drugDtos);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }

@@ -27,14 +27,27 @@ namespace Pharmacare.Api.Repositories
             return categories;
         }
 
-        public Task<Drug> GetDrugById(Guid id)
+        public async Task<IEnumerable<ActiveSubstance>> GetActiveSubstances()
+        {
+            var activeSubstances = await this._pharmacareDbContext.ActiveSubstances.ToListAsync();
+
+            return activeSubstances;
+        }
+
+        public Task<Drug> GetDrugById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Drug> GetCategoryById(Guid id)
+        public Task<Category> GetCategoryById(int id)
         {
             throw new NotImplementedException();
         }
+
+        public Task<ActiveSubstance> GetActiveSubstanceById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
