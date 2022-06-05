@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using Pharmacare.Api.Repositories;
 using Pharmacare.Api.Repositories.Contracts;
 using Pharmacare.Data;
@@ -26,6 +27,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(policy =>
+    policy.WithOrigins("http://localhost:7049", "https://localhost:7049")
+        .AllowAnyMethod()
+        .WithHeaders(HeaderNames.ContentType)
+    );
 
 app.UseHttpsRedirection();
 
