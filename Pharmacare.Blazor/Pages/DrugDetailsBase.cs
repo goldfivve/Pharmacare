@@ -11,6 +11,12 @@ namespace Pharmacare.Blazor.Pages
 
         [Inject]
         public IDrugService DrugService { get; set; }
+        
+        [Inject]
+        public ICartService CartService { get; set; }
+
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
         public DrugDto Drug { get; set; }
 
@@ -25,6 +31,20 @@ namespace Pharmacare.Blazor.Pages
             catch (Exception e)
             {
                 ErrorMessage = e.Message;
+            }
+        }
+
+        protected async Task AddToCartClick(CartItemToAdd cartItemToAddDto)
+        {
+            try
+            {
+                var cartItemDto = await CartService.AddItem(cartItemToAddDto);
+                NavigationManager.NavigateTo("/Cart");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
     }
