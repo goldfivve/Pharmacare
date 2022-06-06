@@ -6,6 +6,6 @@ namespace Pharmacare.Entities
     {
         [Key]
         public int Id { get; set; }
-        public Guid UserGuid { get; set; }
+        public int UserGuid { get; set; }
     }
 }

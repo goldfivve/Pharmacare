@@ -22,6 +22,23 @@ namespace Pharmacare.Api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Pharmacare.Api.Entities.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("Pharmacare.Entities.ActiveSubstance", b =>
                 {
                     b.Property<int>("SubstanceId")
@@ -64,8 +81,8 @@ namespace Pharmacare.Api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<Guid>("UserGuid")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserGuid")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -215,21 +232,6 @@ namespace Pharmacare.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("Pharmacare.Entities.User", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,7 +4,8 @@ namespace Pharmacare.Blazor.Services.Contracts
 {
     public interface ICartService
     {
-        Task<IEnumerable<CartItemDto>> GetItems(Guid userGuid);
+        Task<List<CartItemDto>> GetItems(int userGuid);
         Task<CartItemDto> AddItem(CartItemToAdd cartItemToAddDto);
+        Task<CartItemDto> DeleteItem(int id);
     }
 }

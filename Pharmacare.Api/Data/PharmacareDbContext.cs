@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Pharmacare.Api.Entities;
 using Pharmacare.Entities;
 
 namespace Pharmacare.Data
@@ -35,6 +36,11 @@ namespace Pharmacare.Data
                 CategoryId = 1,
                 Quantity = 59,
                 ActiveSubstanceId = 1,
+            });
+            modelBuilder.Entity<Cart>().HasData(new Cart
+            {
+                Id = 1,
+                UserGuid = 1
             });
         }
 

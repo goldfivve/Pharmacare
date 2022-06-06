@@ -13,7 +13,7 @@ namespace Pharmacare.Blazor.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<CartItemDto>> GetItems(Guid userGuid)
+        public async Task<List<CartItemDto>> GetItems(int userGuid)
         {
             try
             {
@@ -23,10 +23,10 @@ namespace Pharmacare.Blazor.Services
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
-                        return Enumerable.Empty<CartItemDto>();
+                        return Enumerable.Empty<CartItemDto>().ToList();
                     }
 
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<CartItemDto>>();
+                    return await response.Content.ReadFromJsonAsync<List<CartItemDto>>();
                 }
                 else
                 {
@@ -62,6 +62,27 @@ namespace Pharmacare.Blazor.Services
                     var message = await response.Content.ReadAsStringAsync();
                     throw new Exception(message);
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        public async Task<CartItemDto> DeleteItem(int id)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"api/Cart/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<CartItemDto>();
+                }
+
+                return default(CartItemDto);
+
             }
             catch (Exception e)
             {

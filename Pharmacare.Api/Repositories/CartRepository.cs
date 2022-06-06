@@ -44,16 +44,24 @@ namespace Pharmacare.Api.Repositories
             return null;
         }
 
+        public async Task<CartItem> DeleteItem(int id)
+        {
+            var item = await _context.CartItems.FindAsync(id);
+
+            if (item != null)
+            {
+                _context.CartItems.Remove(item);
+                await _context.SaveChangesAsync();
+            }
+
+            return item;
+        }
+
         public Task<CartItem> UpdateQuantity(int id, CartItemQuantityUpdateDto quantityUpdateDto)
         {
             throw new NotImplementedException();
         }
-
-        public Task<CartItem> DeleteItem(int id)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public async Task<CartItem> GetItem(int id)
         {
             return await (from cart in _context.Carts
@@ -70,7 +78,7 @@ namespace Pharmacare.Api.Repositories
                 }).SingleOrDefaultAsync() ?? throw new InvalidOperationException();
         }
 
-        public async Task<IEnumerable<CartItem>> GetAllItems(Guid userGuid)
+        public async Task<IEnumerable<CartItem>> GetAllItems(int userGuid)
         {
             return await (from cart in _context.Carts
                 join cartItem in _context.CartItems

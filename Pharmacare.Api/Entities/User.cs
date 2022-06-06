@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Pharmacare.Entities
+namespace Pharmacare.Api.Entities
 {
     public class User
     {
         [Key]
-        public Guid UserId { get; init; }
+        public int Id { get; init; }
         public string Name { get; init; }
     }
 }

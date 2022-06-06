@@ -2,7 +2,7 @@
 {
     public class HardCoded
     {
-        public static Guid UserGuid = Guid.NewGuid();
+        public static int UserGuid = 1;
         public const int CardId = 1;
     }
 }

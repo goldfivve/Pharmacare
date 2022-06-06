@@ -22,7 +22,7 @@ namespace Pharmacare.Api.Controllers
 
         [HttpGet]
         [Route("{userGuid}/GetItems")]
-        public async Task<ActionResult<IEnumerable<CartItemDto>>> GetItems(Guid userGuid)
+        public async Task<ActionResult<IEnumerable<CartItemDto>>> GetItems(int userGuid)
         {
             try
             {
@@ -105,6 +105,37 @@ namespace Pharmacare.Api.Controllers
 
                 return CreatedAtAction(nameof(GetItem), new {id = newCartItemDto.Id}, newCartItemDto);
 
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult<CartItemDto>> DeleteItem(int id)
+        {
+            try
+            {
+                var cartItem = await _cartRepository.DeleteItem(id);
+
+                if (cartItem == null)
+                {
+                    return NotFound();
+                }
+
+                var drug = await _drugRepository.GetDrugById(cartItem.DrugId);
+
+                if (drug == null)
+                {
+                    return NotFound();
+
+                }
+
+                var cartItemDto = cartItem.ConvertToDto(drug);
+
+                return Ok(cartItemDto);
             }
             catch (Exception e)
             {
