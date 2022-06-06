@@ -70,7 +70,7 @@ namespace Pharmacare.Api.Repositories
                 }).SingleOrDefaultAsync() ?? throw new InvalidOperationException();
         }
 
-        public async Task<IEnumerable<CartItem>> GetAllItems(Guid userGuid)
+        public async Task<IEnumerable<CartItem>> GetItems(Guid userGuid)
         {
             return await (from cart in _context.Carts
                 join cartItem in _context.CartItems

@@ -61,24 +61,23 @@ namespace Pharmacare.Api.Extensions
                     Price = drug.Price,
                     Quantity = cartItem.Quantity,
                     TotalPrice = drug.Price * cartItem.Quantity
-
                 }).ToList();
         }
+
         public static CartItemDto ConvertToDto(this CartItem cartItem,
             Drug drug)
         {
             return new CartItemDto
-                {
-                    Id = cartItem.Id,
-                    DrugId = drug.DrugId,
-                    CartId = cartItem.CartId,
-                    DrugImageURL = drug.ImageURL,
-                    DrugName = drug.TradeName,
-                    Price = drug.Price,
-                    Quantity = cartItem.Quantity,
-                    TotalPrice = drug.Price * cartItem.Quantity
-
-                };
+            {
+                Id = cartItem.Id,
+                DrugId = drug.DrugId,
+                CartId = cartItem.CartId,
+                DrugImageURL = drug.ImageURL,
+                DrugName = drug.TradeName,
+                Price = drug.Price,
+                Quantity = cartItem.Quantity,
+                TotalPrice = drug.Price * cartItem.Quantity
+            };
         }
     }
 }

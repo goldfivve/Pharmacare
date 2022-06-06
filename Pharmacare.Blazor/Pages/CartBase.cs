@@ -6,6 +6,7 @@ namespace Pharmacare.Blazor.Pages
 {
     public class CartBase : ComponentBase
     {
+        [Inject]
         public ICartService CartService { get; set; }
 
         public IEnumerable<CartItemDto> CartItems { get; set; }

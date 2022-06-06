@@ -26,7 +26,7 @@ namespace Pharmacare.Api.Controllers
         {
             try
             {
-                var cartItems = await _cartRepository.GetAllItems(userGuid);
+                var cartItems = await _cartRepository.GetItems(userGuid);
 
                 if (cartItems == null)
                 {
