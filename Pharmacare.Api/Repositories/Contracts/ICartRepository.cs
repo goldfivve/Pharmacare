@@ -9,6 +9,6 @@ namespace Pharmacare.Api.Repositories.Contracts
         Task<CartItem> UpdateQuantity (int id, CartItemQuantityUpdateDto quantityUpdateDto);
         Task<CartItem> DeleteItem(int id);
         Task<CartItem> GetItem (int id);
-        Task<IEnumerable<CartItem>> GetItems (Guid userGuid);
+        Task<IEnumerable<CartItem>> GetAllItems (Guid userGuid);
     }
 }

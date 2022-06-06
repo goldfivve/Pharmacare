@@ -11,8 +11,7 @@ else if (ErrorMessage != null)
 }
 else
 {
-    <h3 class="mb-5">Product Details</h3>
-    <div class="row">
+    <h3 class="mb-5">
         <div class="col-md-6 mb-4">
             <img class="img-fluid" src="@Drug.ImageURL"/>
         </div>
@@ -21,9 +20,10 @@ else
             <h3>@Drug.TradeName</h3>
             <p class="mb-4">@Drug.Price.ToString("C")&nbsp;(@Drug.Quantity items in stock)</p>
             <div>
-                <button class="btn btn-success" @onclick="() => AddToCartClick(new CartItemToAdd {CartId = HardCoded.CardId, DrugId = Drug.DrugId, Quantity = 1})">Add to cart</button>
+                <button class="btn btn-success" @onclick="(() => AddToCartClick(new CartItemToAdd {CartId = HardCoded.CardId, DrugId = Drug.DrugId, Quantity = 1}))">Add to cart</button>
             </div>
         </div>
-    </div>
 
-   }
+
+    </h3>
+}
