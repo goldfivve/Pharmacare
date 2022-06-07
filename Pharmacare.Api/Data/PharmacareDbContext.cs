@@ -42,6 +42,12 @@ namespace Pharmacare.Data
                 Id = 1,
                 UserGuid = 1
             });
+            modelBuilder.Entity<Cart>().HasData(new Cart
+            {
+                Id = 2,
+                UserGuid = 2
+
+            });
         }
 
         public DbSet<ActiveSubstance> ActiveSubstances { get; set; }

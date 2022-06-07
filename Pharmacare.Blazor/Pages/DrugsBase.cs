@@ -9,11 +9,30 @@ namespace Pharmacare.Blazor.Pages
         [Inject]
         public IDrugService DrugService { get; set; }
 
+        [Inject]
+        public ICartService CartService { get; set; }
+
         public IEnumerable<DrugDto> Drugs { get; set; }
+
+        public string ErrorMessage { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Drugs = await DrugService.GetItems();
+            try
+            {
+                Drugs = await DrugService.GetItems();
+
+                var cartItems = await CartService.GetItems(HardCoded.UserGuid);
+                var totalQuantity = cartItems.Sum(i => i.Quantity);
+
+                CartService.RaiseEventOnCartChanged(totalQuantity);
+
+            }
+            catch (Exception e)
+            {
+                ErrorMessage = e.Message;
+            }
+            
         }
 
         protected IOrderedEnumerable<IGrouping<int, DrugDto>> GetGroupedDrugsByCategory()

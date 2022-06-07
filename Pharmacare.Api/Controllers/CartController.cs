@@ -43,7 +43,6 @@ namespace Pharmacare.Api.Controllers
                 var cartItemsDto = cartItems.ConvertToDto(drugs);
 
                 return Ok(cartItemsDto);
-
             }
             catch (Exception e)
             {
@@ -72,12 +71,10 @@ namespace Pharmacare.Api.Controllers
                 var cartItemDto = cartItem.ConvertToDto(drug);
 
                 return Ok(cartItemDto);
-
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-
             }
         }
 
@@ -91,7 +88,6 @@ namespace Pharmacare.Api.Controllers
                 if (newCartItem == null)
                 {
                     return NoContent();
-                    
                 }
 
                 var drug = await _drugRepository.GetDrugById(newCartItem.DrugId);
@@ -104,12 +100,10 @@ namespace Pharmacare.Api.Controllers
                 var newCartItemDto = newCartItem.ConvertToDto(drug);
 
                 return CreatedAtAction(nameof(GetItem), new {id = newCartItemDto.Id}, newCartItemDto);
-
             }
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-
             }
         }
 
@@ -130,7 +124,6 @@ namespace Pharmacare.Api.Controllers
                 if (drug == null)
                 {
                     return NotFound();
-
                 }
 
                 var cartItemDto = cartItem.ConvertToDto(drug);
@@ -140,9 +133,32 @@ namespace Pharmacare.Api.Controllers
             catch (Exception e)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-
             }
         }
 
+        [HttpPatch("{id:int}")]
+        public async Task<ActionResult<CartItemDto>> UpdateQuantity(int id,
+            CartItemQuantityUpdateDto cartItemQuantityUpdateDto)
+        {
+            try
+            {
+                var cartItem = await _cartRepository.UpdateQuantity(id, cartItemQuantityUpdateDto);
+
+                if (cartItem == null)
+                {
+                    return NotFound();
+                }
+
+                var drug = await _drugRepository.GetDrugById(cartItem.DrugId);
+
+                var cartItemDto = cartItem.ConvertToDto(drug);
+
+                return Ok(cartItemDto);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
     }
 }

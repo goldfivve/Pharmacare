@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
+using Newtonsoft.Json;
 using Pharmacare.Blazor.Services.Contracts;
 using Pharmacare.Models.Dtos;
 
@@ -7,6 +9,8 @@ namespace Pharmacare.Blazor.Services
     public class CartService : ICartService
     {
         private readonly HttpClient _httpClient;
+
+        public event Action<int> OnCartChanged;
 
         public CartService(HttpClient httpClient)
         {
@@ -88,6 +92,41 @@ namespace Pharmacare.Blazor.Services
             {
                 Console.WriteLine(e);
                 throw;
+            }
+        }
+
+        public async Task<CartItemDto> UpdateQuantity(CartItemQuantityUpdateDto cartItemQuantityUpdateDto)
+        {
+            try
+            {
+                var jsonRequest = JsonConvert.SerializeObject(cartItemQuantityUpdateDto);
+                var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json-patch+json");
+
+                var response = await _httpClient.PatchAsync($"api/Cart/{cartItemQuantityUpdateDto.CartItemId}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadFromJsonAsync<CartItemDto>();
+                }
+
+                return null;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+
+
+        }
+
+        public void RaiseEventOnCartChanged(int totalQuantity)
+        {
+            if (OnCartChanged != null)
+            {
+                OnCartChanged.Invoke(totalQuantity);
             }
         }
     }

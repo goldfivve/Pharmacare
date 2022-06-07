@@ -12,24 +12,28 @@ else if (ErrorMessage != null)
 else
 {
     <h3 class="mb-5">Shopping Cart</h3>
-    @if(CartItems.Count() > 0)
+    @if (CartItems.Count() > 0)
     {
-        <div class = "row mb-5">
-            <div class ="col-md-9">
-                @foreach(var item in CartItems)
+        <div class="row mb-5">
+            <div class="col-md-9">
+                @foreach (var item in CartItems)
                 {
                     <div class="row mb-4">
                         <div class="col-md-4">
                             <img src="@item.DrugImageURL" width="300" class="img-thumbnail">
                         </div>
-                        <div class = "col-md-8">
+                        <div class="col-md-8">
                             <h5>@item.DrugName</h5>
                             <span>
-                                Price: <b>@item.Price.ToString("C")</b></span>
-                            
+                                Price: <b>@item.Price.ToString("C")</b>
+                                <input @oninput="() => UpdateQuantityInput(item.Id)" type="number" @bind="@item.Quantity"/>
+                                <button data-itemId="@item.Id" class="btn btn-info btn-sm update-qty" @onclick="() => UpdateQuantityCartItem(item.Id, item.Quantity)">Update quantity</button>
+                            </span>
                             <div>
                                 <button @onclick="() => DeleteCartIemClick(item.Id)"
-                                    class="btn btn-danger">Delete Item</button>
+                                        class="btn btn-danger">
+                                    Delete Item
+                                </button>
                             </div>
                         </div>
 
@@ -39,9 +43,9 @@ else
             <div class="col-md-3">
                 <h5>Cart Summary</h5>
                 <div class="mt-2">
-                    <div>Total - </div>
+                    <div>Total - (@TotalQuantity items)&nbsp;@TotalPrice</div>
                     <a href="#" class="btn btn-success">
-                        <span class="oi oi-credit-card"></span>&nbsp; Proceed to Checkout 
+                        <span class="oi oi-credit-card"></span>&nbsp; Proceed to Checkout
                     </a>
                 </div>
             </div>

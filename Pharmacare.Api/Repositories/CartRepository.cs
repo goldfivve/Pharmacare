@@ -57,9 +57,18 @@ namespace Pharmacare.Api.Repositories
             return item;
         }
 
-        public Task<CartItem> UpdateQuantity(int id, CartItemQuantityUpdateDto quantityUpdateDto)
+        public async Task<CartItem> UpdateQuantity(int id, CartItemQuantityUpdateDto quantityUpdateDto)
         {
-            throw new NotImplementedException();
+            var item = await _context.CartItems.FindAsync(id);
+
+            if (item != null)
+            {
+                item.Quantity = quantityUpdateDto.Quantity;
+                await _context.SaveChangesAsync();
+                return item;
+            }
+
+            return null;
         }
         
         public async Task<CartItem> GetItem(int id)

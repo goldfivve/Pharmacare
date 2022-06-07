@@ -8,7 +8,7 @@ namespace Pharmacare.Models.Dtos
 {
     public class CartItemQuantityUpdateDto
     {
-        public int DrugId { get; set; }
+        public int CartItemId { get; set; }
         public int Quantity { get; set; }
     }
 }
