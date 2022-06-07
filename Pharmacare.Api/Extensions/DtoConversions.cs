@@ -1,10 +1,22 @@
 ﻿using Pharmacare.Entities;
 using Pharmacare.Models.Dtos;
+using Category = Pharmacare.Entities.Category;
 
 namespace Pharmacare.Api.Extensions
 {
     public static class DtoConversions
     {
+        public static IEnumerable<CategoryDto> ConvertToDto(this IEnumerable<Category> categories)
+        {
+            return (from category in categories
+                select new CategoryDto
+                {
+                    Id = category.Id,
+                    Name = category.Name
+
+                }).ToList();
+        }
+
         public static IEnumerable<DrugDto> ConvertToDto(this IEnumerable<Drug> drugs,
             IEnumerable<Category> drugCategories, IEnumerable<ActiveSubstance> activeSubstances)
         {

@@ -10,5 +10,7 @@ namespace Pharmacare.Api.Repositories.Contracts
         Task<Drug> GetDrugById(int id);
         Task<Category> GetCategoryById(int id);
         Task<ActiveSubstance> GetActiveSubstanceById(int id);
+
+        Task<IEnumerable<Drug>> GetItemsByCategory(int id);
     }
 }

@@ -1,0 +1,22 @@
+﻿@page "/DrugsByCategory/{CategoryId:int}"
+@inherits DrugsByCategoryBase
+
+@if (Drugs == null && ErrorMessage == null)
+{
+    <DisplaySpinner/>
+}
+else if (ErrorMessage != null)
+{
+    <DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
+}
+else
+{
+    <h3>@CategoryName</h3>
+   
+    @if(Drugs.Count() > 0)
+    {
+        <div class = "row mt-3">
+            <DisplayDrugs Drugs="@Drugs"></DisplayDrugs>
+        </div>
+    }
+}

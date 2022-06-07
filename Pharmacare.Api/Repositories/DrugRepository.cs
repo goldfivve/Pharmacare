@@ -52,5 +52,12 @@ namespace Pharmacare.Api.Repositories
             return substance;
         }
 
+        public async Task<IEnumerable<Drug>> GetItemsByCategory(int id)
+        {
+            var drugs = await (from drug in _pharmacareDbContext.Drugs
+                where drug.CategoryId == id
+                select drug).ToListAsync();
+            return drugs;
+        }
     }
 }
