@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  pharmacare.api:
+    image: ${DOCKER_REGISTRY-}pharmacareapi
+    build:
+      context: .
+      dockerfile: Pharmacare.Api/Dockerfile
